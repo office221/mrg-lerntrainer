@@ -213,8 +213,11 @@ function doSearch(){
 function escapeHtml(v){return v.replace(/[&<>'"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[ch]))}
 function exportProgress(){const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),progress},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="MRG-Lernstand.json";a.click();URL.revokeObjectURL(a.href)}
 
-function applyTheme(theme){document.documentElement.dataset.theme=theme;const dark=theme==="dark";$("themeBtn").textContent=dark?"☀":"☾";$("themeBtn").setAttribute("aria-label",dark?"Hellen Modus einschalten":"Dunklen Modus einschalten")}
-const savedTheme=localStorage.getItem(THEME_KEY)||"light";applyTheme(savedTheme);
+function applyTheme(theme){document.documentElement.dataset.theme=theme;const dark=theme==="dark";$("themeBtn").textContent=dark?"☀ Hell":"☾ Dunkel";$("themeBtn").setAttribute("aria-label",dark?"Hellen Modus einschalten":"Dunklen Modus einschalten")}
+const forcedTheme=new URLSearchParams(location.search).get("theme");
+const savedTheme=(forcedTheme==="light"||forcedTheme==="dark")?forcedTheme:(localStorage.getItem(THEME_KEY)||"light");
+if(forcedTheme==="light"||forcedTheme==="dark")localStorage.setItem(THEME_KEY,forcedTheme);
+applyTheme(savedTheme);
 $("themeBtn").addEventListener("click",()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";localStorage.setItem(THEME_KEY,next);applyTheme(next)});
 setupChapters();buildQueue();
 els.showBtn.addEventListener("click",reveal);
