@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="de-AT">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#12372a">
+  <title>MRG-Lerntrainer</title>
+  <style>
+    :root{--bg:#f4f1e8;--card:#fffdf7;--ink:#17241d;--muted:#637168;--green:#12372a;--green2:#2c6e55;--line:#d9ded8;--gold:#e7b85c;--red:#b94a48;--shadow:0 14px 40px rgba(20,45,34,.12)}
+    *{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",sans-serif;background:linear-gradient(145deg,#edf2ed 0%,var(--bg) 55%,#efe7d5 100%);color:var(--ink);min-height:100vh}
+    button,select,input{font:inherit} button{cursor:pointer}.wrap{max-width:820px;margin:auto;padding:18px 16px 54px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px}.brand{display:flex;align-items:center;gap:12px}.logo{display:grid;place-items:center;width:48px;height:48px;border-radius:15px;background:var(--green);color:white;font-weight:850;letter-spacing:.5px;box-shadow:var(--shadow)}
+    h1{font-size:clamp(1.25rem,4vw,1.8rem);margin:0}.sub{font-size:.86rem;color:var(--muted);margin-top:2px}.icon-btn{border:1px solid var(--line);background:rgba(255,255,255,.72);border-radius:12px;padding:10px 12px;color:var(--ink)}
+    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}.stat{background:rgba(255,255,255,.72);border:1px solid var(--line);padding:12px;border-radius:15px}.stat b{display:block;font-size:1.25rem}.stat span{color:var(--muted);font-size:.78rem}
+    .toolbar{display:grid;grid-template-columns:1fr auto;gap:10px;margin-bottom:14px}.toolbar select,.toolbar input{width:100%;border:1px solid var(--line);border-radius:12px;padding:11px;background:white;color:var(--ink)}
+    .progress{height:8px;border-radius:999px;background:#dce4de;overflow:hidden;margin:12px 2px 18px}.progress>div{height:100%;width:0;background:linear-gradient(90deg,var(--green2),var(--gold));transition:width .25s}
+    .card{position:relative;min-height:390px;background:var(--card);border:1px solid #dfe3dd;border-radius:24px;padding:25px;box-shadow:var(--shadow);display:flex;flex-direction:column}.eyebrow{display:flex;justify-content:space-between;gap:12px;color:var(--green2);font-size:.78rem;font-weight:750;text-transform:uppercase;letter-spacing:.06em}.question{font-size:clamp(1.45rem,5vw,2.1rem);line-height:1.2;margin:36px 0 22px;font-weight:800}.hint{color:var(--muted);font-size:.9rem;margin-top:auto}.answer{display:none;border-top:1px solid var(--line);padding-top:22px;margin-top:4px}.answer.show{display:block}.short-answer{font-size:1.25rem;line-height:1.4;font-weight:750;margin:0 0 14px}.explain{font-size:1rem;line-height:1.5;color:#3e4b43;margin:0}.source{margin-top:18px;font-size:.82rem;color:var(--muted)}
+    .show-btn{width:100%;margin-top:16px;border:0;border-radius:14px;padding:15px;background:var(--green);color:white;font-weight:800}.ratings{display:none;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}.ratings.show{display:grid}.rate{border:1px solid var(--line);background:white;padding:11px 5px;border-radius:12px;font-size:.85rem}.rate small{display:block;color:var(--muted);font-size:.68rem;margin-top:2px}.again{border-color:#e7b5b3;color:#8c2927}.good{border-color:#9ac4ae}.easy{background:#e8f3ed}
+    .empty{display:none;text-align:center;padding:55px 18px;background:var(--card);border-radius:24px;box-shadow:var(--shadow)}.empty h2{margin:0 0 8px}.empty p{color:var(--muted)}.primary{border:0;background:var(--green);color:white;border-radius:12px;padding:12px 16px;font-weight:750}
+    dialog{border:0;border-radius:20px;padding:0;max-width:620px;width:calc(100% - 28px);box-shadow:0 25px 80px rgba(0,0,0,.3)}dialog::backdrop{background:rgba(10,25,18,.55)}.modal{padding:22px}.modal h2{margin-top:0}.modal p{line-height:1.45;color:#46544c}.modal-actions{display:flex;flex-wrap:wrap;gap:8px}.modal button{border:1px solid var(--line);background:white;border-radius:10px;padding:10px 12px}.danger{color:var(--red)}
+    .search-results{display:none;margin:10px 0 14px;background:white;border:1px solid var(--line);border-radius:14px;overflow:hidden}.result{padding:11px 13px;border-bottom:1px solid var(--line);cursor:pointer}.result:last-child{border:0}.result b{display:block}.result small{color:var(--muted)}
+    footer{margin-top:18px;color:var(--muted);font-size:.76rem;line-height:1.5;text-align:center}footer a{color:var(--green2)}
+    @media(max-width:560px){.wrap{padding:12px 11px 35px}.stats{gap:6px}.stat{padding:9px}.card{min-height:420px;padding:21px}.ratings{grid-template-columns:repeat(2,1fr)}.toolbar{grid-template-columns:1fr}.question{margin-top:28px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand"><div class="logo">MRG</div><div><h1>MRG-Lerntrainer</h1><div class="sub">Kurze Fragen. Klare Antworten.</div></div></div>
+    <button class="icon-btn" id="settingsBtn" aria-label="Einstellungen">â</button>
+  </header>
+
+  <section class="stats" aria-label="Lernstand">
+    <div class="stat"><b id="dueCount">0</b><span>heute fÃ¤llig</span></div>
+    <div class="stat"><b id="learnedCount">0</b><span>schon gelernt</span></div>
+    <div class="stat"><b id="masteredCount">0</b><span>sicher</span></div>
+  </section>
+
+  <section class="toolbar">
+    <select id="chapter" aria-label="Kapitel wÃ¤hlen"><option value="all">Alle Kapitel</option></select>
+    <input id="search" type="search" placeholder="Frage oder Paragraf suchen â¦" autocomplete="off">
+  </section>
+  <div class="search-results" id="searchResults"></div>
+  <div class="progress" aria-label="Fortschritt"><div id="progressBar"></div></div>
+
+  <main>
+    <article class="card" id="card">
+      <div class="eyebrow"><span id="category"></span><span id="counter"></span></div>
+      <div class="question" id="question"></div>
+      <div class="answer" id="answer">
+        <p class="short-answer" id="shortAnswer"></p>
+        <p class="explain" id="explain"></p>
+        <div class="source" id="source"></div>
+      </div>
+      <div class="hint" id="hint">Ãberlege zuerst selbst.</div>
+      <button class="show-btn" id="showBtn">Antwort zeigen</button>
+      <div class="ratings" id="ratings">
+        <button class="rate again" data-grade="again">Nochmal<small>10 Minuten</small></button>
+        <button class="rate" data-grade="hard">Schwer<small>kurz warten</small></button>
+        <button class="rate good" data-grade="good">Gut<small>normal</small></button>
+        <button class="rate easy" data-grade="easy">Leicht<small>spÃ¤ter</small></button>
+      </div>
+    </article>
+    <section class="empty" id="empty">
+      <h2>FÃ¼r heute geschafft.</h2>
+      <p>In diesem Kapitel ist nichts mehr fÃ¤llig.</p>
+      <button class="primary" id="learnNewBtn">Neue Karten lernen</button>
+    </section>
+  </main>
+
+  <footer>
+    Grundlage: MRG, RIS-Fassung vom 23.08.2026. Dieser Trainer ist eine Lernhilfe.<br>
+    Bei einem Rechtsfall gilt der aktuelle Gesetzestext. <a href="https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002531" target="_blank" rel="noopener">MRG im RIS Ã¶ffnen</a>
+  </footer>
+</div>
+
+<dialog id="settings">
+  <div class="modal">
+    <h2>Einstellungen</h2>
+    <p>Der Lernstand bleibt nur auf diesem GerÃ¤t gespeichert.</p>
+    <div class="modal-actions">
+      <button id="exportBtn">Lernstand exportieren</button>
+      <button id="resetBtn" class="danger">Lernstand zurÃ¼cksetzen</button>
+      <button id="closeBtn">SchlieÃen</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+const cards = [
+{id:1,chapter:"Grundlagen",law:"Â§ 1 MRG",q:"Was regelt das MRG?",a:"Es regelt viele MietverhÃ¤ltnisse in Ãsterreich.",e:"Es enthÃ¤lt Rechte und Pflichten fÃ¼r Mieter und Vermieter."},
+{id:2,chapter:"Grundlagen",law:"Â§ 1 MRG",q:"Gilt das MRG fÃ¼r jedes Mietobjekt?",a:"Nein.",e:"Es gibt Vollanwendung, Teilanwendung und Ausnahmen. Das GebÃ¤ude und der Vertrag sind wichtig."},
+{id:3,chapter:"Grundlagen",law:"Â§ 2 MRG",q:"Was ist eine Hauptmiete?",a:"Der Vertrag besteht direkt mit dem EigentÃ¼mer oder einem gleichgestellten Vermieter.",e:"Das Gesetz nennt weitere berechtigte Vermieter. Der Vertrag ist entscheidend."},
+{id:4,chapter:"Grundlagen",law:"Â§ 2 MRG",q:"Was ist eine Untermiete?",a:"Der Hauptmieter vermietet an eine weitere Person.",e:"Diese Person ist Untermieter. Ihr Vertrag besteht mit dem Hauptmieter."},
+{id:5,chapter:"Erhaltung",law:"Â§ 3 MRG",q:"Wer muss die allgemeinen Teile des Hauses erhalten?",a:"GrundsÃ¤tzlich der Vermieter.",e:"Dazu zÃ¤hlen zum Beispiel Dach, Fassade und Stiegenhaus."},
+{id:6,chapter:"Erhaltung",law:"Â§ 3 MRG",q:"Wer ist bei einem ernsten Schaden in der Wohnung zustÃ¤ndig?",a:"GrundsÃ¤tzlich der Vermieter.",e:"Ein ernster Schaden kann die Substanz oder Sicherheit betreffen."},
+{id:7,chapter:"Erhaltung",law:"Â§ 8 MRG",q:"Muss der Mieter die Wohnung pfleglich behandeln?",a:"Ja.",e:"Er muss SchÃ¤den vermeiden. Bestimmte Einrichtungen muss er warten."},
+{id:8,chapter:"Erhaltung",law:"Â§ 8 MRG",q:"Muss der Mieter Zutritt erlauben?",a:"Ja, wenn ein wichtiger Grund besteht.",e:"Eine PrÃ¼fung oder notwendige Arbeit kann ein Grund sein. Der Zutritt ist vorher anzukÃ¼ndigen."},
+{id:9,chapter:"VerÃ¤nderungen",law:"Â§ 9 MRG",q:"Muss der Mieter einen grÃ¶Ãeren Umbau melden?",a:"Ja.",e:"Eine wesentliche VerÃ¤nderung ist dem Vermieter anzuzeigen."},
+{id:10,chapter:"VerÃ¤nderungen",law:"Â§ 9 MRG",q:"Wann gilt die Zustimmung zu einem gemeldeten Umbau als erteilt?",a:"Wenn der Vermieter nicht binnen zwei Monaten ablehnt.",e:"Das gilt nur bei einer ordnungsgemÃ¤Ãen Anzeige. Weitere Voraussetzungen bleiben wichtig."},
+{id:11,chapter:"Untermiete",law:"Â§ 11 MRG",q:"Darf ein Vermieter jede Untervermietung verbieten?",a:"Nein.",e:"Ein Verbot braucht einen wichtigen Grund. Ãberbelegung kann ein Grund sein."},
+{id:12,chapter:"Untermiete",law:"Â§ 11 MRG",q:"Ist ein stark Ã¼berhÃ¶hter Untermietzins problematisch?",a:"Ja.",e:"Eine unverhÃ¤ltnismÃ¤Ãig hohe Gegenleistung kann ein wichtiger Grund gegen die Untervermietung sein."},
+{id:13,chapter:"Weitergabe",law:"Â§ 12 MRG",q:"Kann ein Hauptmieter die Wohnung an nahe AngehÃ¶rige abtreten?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ein gemeinsamer Haushalt und die gesetzliche Mindestdauer sind wichtig."},
+{id:14,chapter:"Weitergabe",law:"Â§ 14 MRG",q:"Endet der Mietvertrag automatisch mit dem Tod des Mieters?",a:"Nein.",e:"Bestimmte Personen kÃ¶nnen eintreten. Voraussetzungen sind gemeinsamer Haushalt und dringender Wohnbedarf."},
+{id:15,chapter:"Mietzins",law:"Â§ 15 MRG",q:"Woraus besteht der Mietzins?",a:"Aus mehreren Bestandteilen.",e:"Dazu zÃ¤hlen Hauptmietzins, Betriebskosten, besondere Aufwendungen und Umsatzsteuer."},
+{id:16,chapter:"Mietzins",law:"Â§ 16 MRG",q:"Gibt es immer denselben erlaubten Hauptmietzins?",a:"Nein.",e:"Das Mietobjekt und die Anwendbarkeit des MRG bestimmen das Mietzinssystem."},
+{id:17,chapter:"Mietzins",law:"Â§ 16b MRG",q:"Darf eine Kaution vereinbart werden?",a:"Ja.",e:"Sie sichert AnsprÃ¼che des Vermieters. Sie darf nicht willkÃ¼rlich verwendet werden."},
+{id:18,chapter:"Mietzins",law:"Â§ 17 MRG",q:"Warum ist die NutzflÃ¤che wichtig?",a:"Sie kann den Anteil an Gesamtkosten bestimmen.",e:"Die Berechnung folgt gesetzlichen Regeln."},
+{id:19,chapter:"Betriebskosten",law:"Â§ 21 MRG",q:"Darf der Vermieter jede Ausgabe als Betriebskosten verrechnen?",a:"Nein.",e:"Nur gesetzlich vorgesehene Kosten dÃ¼rfen weiterverrechnet werden."},
+{id:20,chapter:"Betriebskosten",law:"Â§ 21 MRG",q:"MÃ¼ssen Betriebskosten nachvollziehbar sein?",a:"Ja.",e:"Es muss eine Abrechnung geben. Der Mieter hat Einsichtsrechte."},
+{id:21,chapter:"Zahlungen",law:"Â§ 27 MRG",q:"Sind verbotene AblÃ¶sen erlaubt?",a:"Nein.",e:"Zahlungen ohne gleichwertige Gegenleistung kÃ¶nnen unzulÃ¤ssig sein."},
+{id:22,chapter:"Befristung",law:"Â§ 29 MRG",q:"Muss eine Befristung schriftlich sein?",a:"Ja.",e:"Das Vertragsende durch Zeitablauf muss schriftlich vereinbart sein."},
+{id:23,chapter:"Befristung",law:"Â§ 29 Abs. 1 MRG",q:"Wie lang muss eine befristete Wohnungsmiete mindestens dauern?",a:"Meist mindestens fÃ¼nf Jahre.",e:"Ist der Vermieter kein Unternehmer, reichen mindestens drei Jahre. Stand: 23.08.2026."},
+{id:24,chapter:"Befristung",law:"Â§ 29 Abs. 2 MRG",q:"Kann der Mieter einen befristeten Wohnungsvertrag frÃ¼her kÃ¼ndigen?",a:"Ja, nach einem Jahr.",e:"Die Frist betrÃ¤gt drei Monate. GekÃ¼ndigt wird zum Monatsletzten."},
+{id:25,chapter:"Befristung",law:"Â§ 29 Abs. 3 MRG",q:"Was passiert, wenn nach dem Fristende niemand handelt?",a:"Der Vertrag wird einmal befristet erneuert.",e:"Die Erneuerung dauert fÃ¼nf Jahre. Bei einem nicht unternehmerischen Vermieter dauert sie drei Jahre."},
+{id:26,chapter:"Befristung",law:"Â§ 29 Abs. 3 MRG",q:"Was passiert nach der zweiten stillen Fortsetzung?",a:"Der Vertrag wird unbefristet.",e:"Das gilt nach Ablauf des ersten gesetzlichen Erneuerungszeitraums."},
+{id:27,chapter:"Befristung",law:"Â§ 29 Abs. 4 MRG",q:"Kann eine Befristung verlÃ¤ngert werden?",a:"Ja, schriftlich.",e:"Bei Wohnungen gelten wieder die gesetzlichen Mindestzeiten."},
+{id:28,chapter:"KÃ¼ndigung",law:"Â§ 30 MRG",q:"Kann der Vermieter ohne Grund kÃ¼ndigen?",a:"Im Schutzbereich des MRG grundsÃ¤tzlich nein.",e:"Er braucht einen wichtigen KÃ¼ndigungsgrund."},
+{id:29,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 1 MRG",q:"Kann MietzinsrÃ¼ckstand ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Der Mieter muss trotz Mahnung im RÃ¼ckstand sein. Die gesetzlichen Voraussetzungen mÃ¼ssen erfÃ¼llt sein."},
+{id:30,chapter:"KÃ¼ndigung",law:"Â§ 33 MRG",q:"Kann der Mieter einen MietzinsrÃ¼ckstand noch bezahlen?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ohne grobes Verschulden kann eine rechtzeitige Zahlung die KÃ¼ndigung abwenden. Kosten kÃ¶nnen bleiben."},
+{id:31,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 3 MRG",q:"Was bedeutet erheblich nachteiliger Gebrauch?",a:"Der Mieter schÃ¤digt oder vernachlÃ¤ssigt das Mietobjekt schwer.",e:"Auch ernstes GefÃ¤hrden des Hauses kann darunterfallen."},
+{id:32,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 3 MRG",q:"Kann grob rÃ¼cksichtsloses Verhalten ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Das Verhalten muss das Zusammenwohnen ernsthaft beeintrÃ¤chtigen."},
+{id:33,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 4 MRG",q:"Kann unerlaubte Weitergabe ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Das gilt etwa bei vollstÃ¤ndiger Weitergabe ohne eigenen Bedarf. Details sind zu prÃ¼fen."},
+{id:34,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 MRG",q:"Kann dauernde NichtbenÃ¼tzung ein KÃ¼ndigungsgrund sein?",a:"Ja, unter gesetzlichen Voraussetzungen.",e:"Ein absehbarer dringender Bedarf kann dagegen sprechen."},
+{id:35,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 8 und 9 MRG",q:"Reicht der Wunsch nach Eigenbedarf immer aus?",a:"Nein.",e:"Der Bedarf muss dringend sein. Die Gerichte prÃ¼fen streng."},
+{id:36,chapter:"Verfahren",law:"Â§ 33 MRG",q:"Muss der Vermieter den KÃ¼ndigungsgrund nennen?",a:"Ja.",e:"Der Grund ist in der gerichtlichen KÃ¼ndigung kurz anzufÃ¼hren."},
+{id:37,chapter:"Verfahren",law:"Â§ 33 MRG",q:"Wer muss den KÃ¼ndigungsgrund beweisen?",a:"Der Vermieter.",e:"Er muss den behaupteten Grund im Verfahren nachweisen."},
+{id:38,chapter:"Verfahren",law:"Â§ 34 MRG",q:"Kann das Gericht die RÃ¤umungsfrist verlÃ¤ngern?",a:"Ja, unter bestimmten Voraussetzungen.",e:"Der Mieter braucht wichtige GrÃ¼nde. Dem Vermieter darf kein unverhÃ¤ltnismÃ¤Ãiger Nachteil entstehen."},
+{id:39,chapter:"Verfahren",law:"MRG, ZPO und EO",q:"Darf der Vermieter selbst das Schloss wechseln?",a:"Nein.",e:"Eine zwangsweise RÃ¤umung erfolgt nur mit gerichtlichem Titel und Exekution."},
+{id:40,chapter:"Verfahren",law:"Â§Â§ 29 bis 35 MRG",q:"Was ist der sichere Weg zur RÃ¤umung?",a:"KÃ¼ndigungsgrund prÃ¼fen und gerichtlichen Weg einhalten.",e:"Keine Selbsthilfe. Bei einem konkreten Fall ist rechtliche Beratung sinnvoll."}
+];
+
+const KEY="mrg-trainer-progress-v1";
+const DAY=86400000;
+let progress=loadProgress();
+let queue=[];
+let index=0;
+let includeNew=true;
+let currentChapter="all";
+
+const $=id=>document.getElementById(id);
+const els={card:$("card"),empty:$("empty"),question:$("question"),answer:$("answer"),shortAnswer:$("shortAnswer"),explain:$("explain"),source:$("source"),category:$("category"),counter:$("counter"),showBtn:$("showBtn"),ratings:$("ratings"),hint:$("hint"),chapter:$("chapter"),search:$("search"),results:$("searchResults"),bar:$("progressBar")};
+
+function loadProgress(){try{return JSON.parse(localStorage.getItem(KEY))||{}}catch{return {}}}
+function saveProgress(){localStorage.setItem(KEY,JSON.stringify(progress));updateStats()}
+function state(id){return progress[id]||{reps:0,interval:0,ease:2.5,due:0,last:0}}
+function chapters(){return [...new Set(cards.map(c=>c.chapter))]}
+function setupChapters(){chapters().forEach(ch=>{const o=document.createElement("option");o.value=ch;o.textContent=ch;els.chapter.appendChild(o)})}
+function eligible(){return cards.filter(c=>currentChapter==="all"||c.chapter===currentChapter)}
+function buildQueue(){
+  const now=Date.now(); const all=eligible();
+  const due=all.filter(c=>state(c.id).reps>0&&state(c.id).due<=now).sort((a,b)=>state(a.id).due-state(b.id).due);
+  const fresh=includeNew?all.filter(c=>state(c.id).reps===0):[];
+  queue=[...due,...fresh]; index=0; render(); updateStats();
+}
+function render(){
+  if(!queue.length||index>=queue.length){els.card.style.display="none";els.empty.style.display="block";els.bar.style.width="100%";return}
+  els.card.style.display="flex";els.empty.style.display="none";
+  const c=queue[index];els.category.textContent=c.chapter;els.counter.textContent=`${index+1} / ${queue.length}`;els.question.textContent=c.q;els.shortAnswer.textContent=c.a;els.explain.textContent=c.e;els.source.textContent=c.law;els.answer.classList.remove("show");els.ratings.classList.remove("show");els.showBtn.style.display="block";els.hint.style.display="block";els.bar.style.width=`${(index/queue.length)*100}%`;
+}
+function reveal(){els.answer.classList.add("show");els.ratings.classList.add("show");els.showBtn.style.display="none";els.hint.style.display="none"}
+function grade(kind){
+  const c=queue[index],s=state(c.id),now=Date.now();
+  if(kind==="again"){s.reps=0;s.interval=0;s.ease=Math.max(1.3,s.ease-.2);s.due=now+10*60000}
+  if(kind==="hard"){s.reps+=1;s.interval=Math.max(1,Math.round((s.interval||1)*1.2));s.ease=Math.max(1.3,s.ease-.15);s.due=now+s.interval*DAY}
+  if(kind==="good"){s.reps+=1;s.interval=s.reps===1?1:s.reps===2?3:Math.max(4,Math.round(s.interval*s.ease));s.due=now+s.interval*DAY}
+  if(kind==="easy"){s.reps+=1;s.ease+=.15;s.interval=s.reps===1?4:Math.max(7,Math.round((s.interval||1)*s.ease));s.due=now+s.interval*DAY}
+  s.last=now;progress[c.id]=s;saveProgress();index++;render();
+}
+function updateStats(){
+  const now=Date.now();const all=eligible();
+  $("dueCount").textContent=all.filter(c=>state(c.id).reps===0||state(c.id).due<=now).length;
+  $("learnedCount").textContent=all.filter(c=>state(c.id).reps>0).length;
+  $("masteredCount").textContent=all.filter(c=>state(c.id).interval>=14).length;
+}
+function doSearch(){
+  const q=els.search.value.trim().toLowerCase();
+  if(!q){els.results.style.display="none";els.results.innerHTML="";return}
+  const found=cards.filter(c=>`${c.q} ${c.a} ${c.e} ${c.law}`.toLowerCase().includes(q)).slice(0,8);
+  els.results.innerHTML=found.length?found.map(c=>`<div class="result" data-id="${c.id}"><b>${escapeHtml(c.q)}</b><small>${escapeHtml(c.law)} Â· ${escapeHtml(c.chapter)}</small></div>`).join(""):"<div class='result'>Nichts gefunden.</div>";
+  els.results.style.display="block";
+  els.results.querySelectorAll("[data-id]").forEach(r=>r.addEventListener("click",()=>{const c=cards.find(x=>x.id===Number(r.dataset.id));queue=[c];index=0;els.search.value="";els.results.style.display="none";render()}));
+}
+function escapeHtml(v){return v.replace(/[&<>'"]/g,ch=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[ch]))}
+function exportProgress(){const blob=new Blob([JSON.stringify({exported:new Date().toISOString(),progress},null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="MRG-Lernstand.json";a.click();URL.revokeObjectURL(a.href)}
+
+setupChapters();buildQueue();
+els.showBtn.addEventListener("click",reveal);
+els.ratings.addEventListener("click",e=>{const b=e.target.closest("[data-grade]");if(b)grade(b.dataset.grade)});
+els.chapter.addEventListener("change",e=>{currentChapter=e.target.value;includeNew=true;buildQueue()});
+els.search.addEventListener("input",doSearch);
+$("learnNewBtn").addEventListener("click",()=>{includeNew=true;const all=eligible().filter(c=>state(c.id).reps===0);queue=all;index=0;render()});
+const dialog=$("settings");$("settingsBtn").addEventListener("click",()=>dialog.showModal());$("closeBtn").addEventListener("click",()=>dialog.close());$("exportBtn").addEventListener("click",exportProgress);$("resetBtn").addEventListener("click",()=>{if(confirm("Lernstand wirklich lÃ¶schen?")){progress={};saveProgress();dialog.close();buildQueue()}});
+dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
+document.addEventListener("keydown",e=>{if(e.key===" "&&els.showBtn.style.display!=="none"){e.preventDefault();reveal()}if(els.ratings.classList.contains("show")&&["1","2","3","4"].includes(e.key)){grade(["again","hard","good","easy"][Number(e.key)-1])}});
+</script>
+</body>
+</html>
