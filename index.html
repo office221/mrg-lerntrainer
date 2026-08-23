@@ -27,18 +27,18 @@
 <div class="wrap">
   <header>
     <div class="brand"><div class="logo">MRG</div><div><h1>MRG-Lerntrainer</h1><div class="sub">Kurze Fragen. Klare Antworten.</div></div></div>
-    <button class="icon-btn" id="settingsBtn" aria-label="Einstellungen">â</button>
+    <button class="icon-btn" id="settingsBtn" aria-label="Einstellungen">⚙</button>
   </header>
 
   <section class="stats" aria-label="Lernstand">
-    <div class="stat"><b id="dueCount">0</b><span>heute fÃ¤llig</span></div>
+    <div class="stat"><b id="dueCount">0</b><span>heute fällig</span></div>
     <div class="stat"><b id="learnedCount">0</b><span>schon gelernt</span></div>
     <div class="stat"><b id="masteredCount">0</b><span>sicher</span></div>
   </section>
 
   <section class="toolbar">
-    <select id="chapter" aria-label="Kapitel wÃ¤hlen"><option value="all">Alle Kapitel</option></select>
-    <input id="search" type="search" placeholder="Frage oder Paragraf suchen â¦" autocomplete="off">
+    <select id="chapter" aria-label="Kapitel wählen"><option value="all">Alle Kapitel</option></select>
+    <input id="search" type="search" placeholder="Frage oder Paragraf suchen …" autocomplete="off">
   </section>
   <div class="search-results" id="searchResults"></div>
   <div class="progress" aria-label="Fortschritt"><div id="progressBar"></div></div>
@@ -52,82 +52,82 @@
         <p class="explain" id="explain"></p>
         <div class="source" id="source"></div>
       </div>
-      <div class="hint" id="hint">Ãberlege zuerst selbst.</div>
+      <div class="hint" id="hint">Überlege zuerst selbst.</div>
       <button class="show-btn" id="showBtn">Antwort zeigen</button>
       <div class="ratings" id="ratings">
         <button class="rate again" data-grade="again">Nochmal<small>10 Minuten</small></button>
         <button class="rate" data-grade="hard">Schwer<small>kurz warten</small></button>
         <button class="rate good" data-grade="good">Gut<small>normal</small></button>
-        <button class="rate easy" data-grade="easy">Leicht<small>spÃ¤ter</small></button>
+        <button class="rate easy" data-grade="easy">Leicht<small>später</small></button>
       </div>
     </article>
     <section class="empty" id="empty">
-      <h2>FÃ¼r heute geschafft.</h2>
-      <p>In diesem Kapitel ist nichts mehr fÃ¤llig.</p>
+      <h2>Für heute geschafft.</h2>
+      <p>In diesem Kapitel ist nichts mehr fällig.</p>
       <button class="primary" id="learnNewBtn">Neue Karten lernen</button>
     </section>
   </main>
 
   <footer>
     Grundlage: MRG, RIS-Fassung vom 23.08.2026. Dieser Trainer ist eine Lernhilfe.<br>
-    Bei einem Rechtsfall gilt der aktuelle Gesetzestext. <a href="https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002531" target="_blank" rel="noopener">MRG im RIS Ã¶ffnen</a>
+    Bei einem Rechtsfall gilt der aktuelle Gesetzestext. <a href="https://www.ris.bka.gv.at/GeltendeFassung.wxe?Abfrage=Bundesnormen&Gesetzesnummer=10002531" target="_blank" rel="noopener">MRG im RIS öffnen</a>
   </footer>
 </div>
 
 <dialog id="settings">
   <div class="modal">
     <h2>Einstellungen</h2>
-    <p>Der Lernstand bleibt nur auf diesem GerÃ¤t gespeichert.</p>
+    <p>Der Lernstand bleibt nur auf diesem Gerät gespeichert.</p>
     <div class="modal-actions">
       <button id="exportBtn">Lernstand exportieren</button>
-      <button id="resetBtn" class="danger">Lernstand zurÃ¼cksetzen</button>
-      <button id="closeBtn">SchlieÃen</button>
+      <button id="resetBtn" class="danger">Lernstand zurücksetzen</button>
+      <button id="closeBtn">Schließen</button>
     </div>
   </div>
 </dialog>
 
 <script>
 const cards = [
-{id:1,chapter:"Grundlagen",law:"Â§ 1 MRG",q:"Was regelt das MRG?",a:"Es regelt viele MietverhÃ¤ltnisse in Ãsterreich.",e:"Es enthÃ¤lt Rechte und Pflichten fÃ¼r Mieter und Vermieter."},
-{id:2,chapter:"Grundlagen",law:"Â§ 1 MRG",q:"Gilt das MRG fÃ¼r jedes Mietobjekt?",a:"Nein.",e:"Es gibt Vollanwendung, Teilanwendung und Ausnahmen. Das GebÃ¤ude und der Vertrag sind wichtig."},
-{id:3,chapter:"Grundlagen",law:"Â§ 2 MRG",q:"Was ist eine Hauptmiete?",a:"Der Vertrag besteht direkt mit dem EigentÃ¼mer oder einem gleichgestellten Vermieter.",e:"Das Gesetz nennt weitere berechtigte Vermieter. Der Vertrag ist entscheidend."},
-{id:4,chapter:"Grundlagen",law:"Â§ 2 MRG",q:"Was ist eine Untermiete?",a:"Der Hauptmieter vermietet an eine weitere Person.",e:"Diese Person ist Untermieter. Ihr Vertrag besteht mit dem Hauptmieter."},
-{id:5,chapter:"Erhaltung",law:"Â§ 3 MRG",q:"Wer muss die allgemeinen Teile des Hauses erhalten?",a:"GrundsÃ¤tzlich der Vermieter.",e:"Dazu zÃ¤hlen zum Beispiel Dach, Fassade und Stiegenhaus."},
-{id:6,chapter:"Erhaltung",law:"Â§ 3 MRG",q:"Wer ist bei einem ernsten Schaden in der Wohnung zustÃ¤ndig?",a:"GrundsÃ¤tzlich der Vermieter.",e:"Ein ernster Schaden kann die Substanz oder Sicherheit betreffen."},
-{id:7,chapter:"Erhaltung",law:"Â§ 8 MRG",q:"Muss der Mieter die Wohnung pfleglich behandeln?",a:"Ja.",e:"Er muss SchÃ¤den vermeiden. Bestimmte Einrichtungen muss er warten."},
-{id:8,chapter:"Erhaltung",law:"Â§ 8 MRG",q:"Muss der Mieter Zutritt erlauben?",a:"Ja, wenn ein wichtiger Grund besteht.",e:"Eine PrÃ¼fung oder notwendige Arbeit kann ein Grund sein. Der Zutritt ist vorher anzukÃ¼ndigen."},
-{id:9,chapter:"VerÃ¤nderungen",law:"Â§ 9 MRG",q:"Muss der Mieter einen grÃ¶Ãeren Umbau melden?",a:"Ja.",e:"Eine wesentliche VerÃ¤nderung ist dem Vermieter anzuzeigen."},
-{id:10,chapter:"VerÃ¤nderungen",law:"Â§ 9 MRG",q:"Wann gilt die Zustimmung zu einem gemeldeten Umbau als erteilt?",a:"Wenn der Vermieter nicht binnen zwei Monaten ablehnt.",e:"Das gilt nur bei einer ordnungsgemÃ¤Ãen Anzeige. Weitere Voraussetzungen bleiben wichtig."},
-{id:11,chapter:"Untermiete",law:"Â§ 11 MRG",q:"Darf ein Vermieter jede Untervermietung verbieten?",a:"Nein.",e:"Ein Verbot braucht einen wichtigen Grund. Ãberbelegung kann ein Grund sein."},
-{id:12,chapter:"Untermiete",law:"Â§ 11 MRG",q:"Ist ein stark Ã¼berhÃ¶hter Untermietzins problematisch?",a:"Ja.",e:"Eine unverhÃ¤ltnismÃ¤Ãig hohe Gegenleistung kann ein wichtiger Grund gegen die Untervermietung sein."},
-{id:13,chapter:"Weitergabe",law:"Â§ 12 MRG",q:"Kann ein Hauptmieter die Wohnung an nahe AngehÃ¶rige abtreten?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ein gemeinsamer Haushalt und die gesetzliche Mindestdauer sind wichtig."},
-{id:14,chapter:"Weitergabe",law:"Â§ 14 MRG",q:"Endet der Mietvertrag automatisch mit dem Tod des Mieters?",a:"Nein.",e:"Bestimmte Personen kÃ¶nnen eintreten. Voraussetzungen sind gemeinsamer Haushalt und dringender Wohnbedarf."},
-{id:15,chapter:"Mietzins",law:"Â§ 15 MRG",q:"Woraus besteht der Mietzins?",a:"Aus mehreren Bestandteilen.",e:"Dazu zÃ¤hlen Hauptmietzins, Betriebskosten, besondere Aufwendungen und Umsatzsteuer."},
-{id:16,chapter:"Mietzins",law:"Â§ 16 MRG",q:"Gibt es immer denselben erlaubten Hauptmietzins?",a:"Nein.",e:"Das Mietobjekt und die Anwendbarkeit des MRG bestimmen das Mietzinssystem."},
-{id:17,chapter:"Mietzins",law:"Â§ 16b MRG",q:"Darf eine Kaution vereinbart werden?",a:"Ja.",e:"Sie sichert AnsprÃ¼che des Vermieters. Sie darf nicht willkÃ¼rlich verwendet werden."},
-{id:18,chapter:"Mietzins",law:"Â§ 17 MRG",q:"Warum ist die NutzflÃ¤che wichtig?",a:"Sie kann den Anteil an Gesamtkosten bestimmen.",e:"Die Berechnung folgt gesetzlichen Regeln."},
-{id:19,chapter:"Betriebskosten",law:"Â§ 21 MRG",q:"Darf der Vermieter jede Ausgabe als Betriebskosten verrechnen?",a:"Nein.",e:"Nur gesetzlich vorgesehene Kosten dÃ¼rfen weiterverrechnet werden."},
-{id:20,chapter:"Betriebskosten",law:"Â§ 21 MRG",q:"MÃ¼ssen Betriebskosten nachvollziehbar sein?",a:"Ja.",e:"Es muss eine Abrechnung geben. Der Mieter hat Einsichtsrechte."},
-{id:21,chapter:"Zahlungen",law:"Â§ 27 MRG",q:"Sind verbotene AblÃ¶sen erlaubt?",a:"Nein.",e:"Zahlungen ohne gleichwertige Gegenleistung kÃ¶nnen unzulÃ¤ssig sein."},
-{id:22,chapter:"Befristung",law:"Â§ 29 MRG",q:"Muss eine Befristung schriftlich sein?",a:"Ja.",e:"Das Vertragsende durch Zeitablauf muss schriftlich vereinbart sein."},
-{id:23,chapter:"Befristung",law:"Â§ 29 Abs. 1 MRG",q:"Wie lang muss eine befristete Wohnungsmiete mindestens dauern?",a:"Meist mindestens fÃ¼nf Jahre.",e:"Ist der Vermieter kein Unternehmer, reichen mindestens drei Jahre. Stand: 23.08.2026."},
-{id:24,chapter:"Befristung",law:"Â§ 29 Abs. 2 MRG",q:"Kann der Mieter einen befristeten Wohnungsvertrag frÃ¼her kÃ¼ndigen?",a:"Ja, nach einem Jahr.",e:"Die Frist betrÃ¤gt drei Monate. GekÃ¼ndigt wird zum Monatsletzten."},
-{id:25,chapter:"Befristung",law:"Â§ 29 Abs. 3 MRG",q:"Was passiert, wenn nach dem Fristende niemand handelt?",a:"Der Vertrag wird einmal befristet erneuert.",e:"Die Erneuerung dauert fÃ¼nf Jahre. Bei einem nicht unternehmerischen Vermieter dauert sie drei Jahre."},
-{id:26,chapter:"Befristung",law:"Â§ 29 Abs. 3 MRG",q:"Was passiert nach der zweiten stillen Fortsetzung?",a:"Der Vertrag wird unbefristet.",e:"Das gilt nach Ablauf des ersten gesetzlichen Erneuerungszeitraums."},
-{id:27,chapter:"Befristung",law:"Â§ 29 Abs. 4 MRG",q:"Kann eine Befristung verlÃ¤ngert werden?",a:"Ja, schriftlich.",e:"Bei Wohnungen gelten wieder die gesetzlichen Mindestzeiten."},
-{id:28,chapter:"KÃ¼ndigung",law:"Â§ 30 MRG",q:"Kann der Vermieter ohne Grund kÃ¼ndigen?",a:"Im Schutzbereich des MRG grundsÃ¤tzlich nein.",e:"Er braucht einen wichtigen KÃ¼ndigungsgrund."},
-{id:29,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 1 MRG",q:"Kann MietzinsrÃ¼ckstand ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Der Mieter muss trotz Mahnung im RÃ¼ckstand sein. Die gesetzlichen Voraussetzungen mÃ¼ssen erfÃ¼llt sein."},
-{id:30,chapter:"KÃ¼ndigung",law:"Â§ 33 MRG",q:"Kann der Mieter einen MietzinsrÃ¼ckstand noch bezahlen?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ohne grobes Verschulden kann eine rechtzeitige Zahlung die KÃ¼ndigung abwenden. Kosten kÃ¶nnen bleiben."},
-{id:31,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 3 MRG",q:"Was bedeutet erheblich nachteiliger Gebrauch?",a:"Der Mieter schÃ¤digt oder vernachlÃ¤ssigt das Mietobjekt schwer.",e:"Auch ernstes GefÃ¤hrden des Hauses kann darunterfallen."},
-{id:32,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 3 MRG",q:"Kann grob rÃ¼cksichtsloses Verhalten ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Das Verhalten muss das Zusammenwohnen ernsthaft beeintrÃ¤chtigen."},
-{id:33,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 4 MRG",q:"Kann unerlaubte Weitergabe ein KÃ¼ndigungsgrund sein?",a:"Ja.",e:"Das gilt etwa bei vollstÃ¤ndiger Weitergabe ohne eigenen Bedarf. Details sind zu prÃ¼fen."},
-{id:34,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 MRG",q:"Kann dauernde NichtbenÃ¼tzung ein KÃ¼ndigungsgrund sein?",a:"Ja, unter gesetzlichen Voraussetzungen.",e:"Ein absehbarer dringender Bedarf kann dagegen sprechen."},
-{id:35,chapter:"KÃ¼ndigung",law:"Â§ 30 Abs. 2 Z 8 und 9 MRG",q:"Reicht der Wunsch nach Eigenbedarf immer aus?",a:"Nein.",e:"Der Bedarf muss dringend sein. Die Gerichte prÃ¼fen streng."},
-{id:36,chapter:"Verfahren",law:"Â§ 33 MRG",q:"Muss der Vermieter den KÃ¼ndigungsgrund nennen?",a:"Ja.",e:"Der Grund ist in der gerichtlichen KÃ¼ndigung kurz anzufÃ¼hren."},
-{id:37,chapter:"Verfahren",law:"Â§ 33 MRG",q:"Wer muss den KÃ¼ndigungsgrund beweisen?",a:"Der Vermieter.",e:"Er muss den behaupteten Grund im Verfahren nachweisen."},
-{id:38,chapter:"Verfahren",law:"Â§ 34 MRG",q:"Kann das Gericht die RÃ¤umungsfrist verlÃ¤ngern?",a:"Ja, unter bestimmten Voraussetzungen.",e:"Der Mieter braucht wichtige GrÃ¼nde. Dem Vermieter darf kein unverhÃ¤ltnismÃ¤Ãiger Nachteil entstehen."},
-{id:39,chapter:"Verfahren",law:"MRG, ZPO und EO",q:"Darf der Vermieter selbst das Schloss wechseln?",a:"Nein.",e:"Eine zwangsweise RÃ¤umung erfolgt nur mit gerichtlichem Titel und Exekution."},
-{id:40,chapter:"Verfahren",law:"Â§Â§ 29 bis 35 MRG",q:"Was ist der sichere Weg zur RÃ¤umung?",a:"KÃ¼ndigungsgrund prÃ¼fen und gerichtlichen Weg einhalten.",e:"Keine Selbsthilfe. Bei einem konkreten Fall ist rechtliche Beratung sinnvoll."}
+{id:1,chapter:"Grundlagen",law:"§ 1 MRG",q:"Was regelt das MRG?",a:"Es regelt viele Mietverhältnisse in Österreich.",e:"Es enthält Rechte und Pflichten für Mieter und Vermieter."},
+{id:2,chapter:"Grundlagen",law:"§ 1 MRG",q:"Gilt das MRG für jedes Mietobjekt?",a:"Nein.",e:"Es gibt Vollanwendung, Teilanwendung und Ausnahmen. Das Gebäude und der Vertrag sind wichtig."},
+{id:3,chapter:"Grundlagen",law:"§ 2 MRG",q:"Was ist eine Hauptmiete?",a:"Der Vertrag besteht direkt mit dem Eigentümer oder einem gleichgestellten Vermieter.",e:"Das Gesetz nennt weitere berechtigte Vermieter. Der Vertrag ist entscheidend."},
+{id:4,chapter:"Grundlagen",law:"§ 2 MRG",q:"Was ist eine Untermiete?",a:"Der Hauptmieter vermietet an eine weitere Person.",e:"Diese Person ist Untermieter. Ihr Vertrag besteht mit dem Hauptmieter."},
+{id:5,chapter:"Erhaltung",law:"§ 3 MRG",q:"Wer muss die allgemeinen Teile des Hauses erhalten?",a:"Grundsätzlich der Vermieter.",e:"Dazu zählen zum Beispiel Dach, Fassade und Stiegenhaus."},
+{id:6,chapter:"Erhaltung",law:"§ 3 MRG",q:"Wer ist bei einem ernsten Schaden in der Wohnung zuständig?",a:"Grundsätzlich der Vermieter.",e:"Ein ernster Schaden kann die Substanz oder Sicherheit betreffen."},
+{id:7,chapter:"Erhaltung",law:"§ 8 MRG",q:"Muss der Mieter die Wohnung pfleglich behandeln?",a:"Ja.",e:"Er muss Schäden vermeiden. Bestimmte Einrichtungen muss er warten."},
+{id:8,chapter:"Erhaltung",law:"§ 8 MRG",q:"Muss der Mieter Zutritt erlauben?",a:"Ja, wenn ein wichtiger Grund besteht.",e:"Eine Prüfung oder notwendige Arbeit kann ein Grund sein. Der Zutritt ist vorher anzukündigen."},
+{id:9,chapter:"Veränderungen",law:"§ 9 MRG",q:"Muss der Mieter einen größeren Umbau melden?",a:"Ja.",e:"Eine wesentliche Veränderung ist dem Vermieter anzuzeigen."},
+{id:10,chapter:"Veränderungen",law:"§ 9 MRG",q:"Wann gilt die Zustimmung zu einem gemeldeten Umbau als erteilt?",a:"Wenn der Vermieter nicht binnen zwei Monaten ablehnt.",e:"Das gilt nur bei einer ordnungsgemäßen Anzeige. Weitere Voraussetzungen bleiben wichtig."},
+{id:11,chapter:"Untermiete",law:"§ 11 MRG",q:"Darf ein Vermieter jede Untervermietung verbieten?",a:"Nein.",e:"Ein Verbot braucht einen wichtigen Grund. Überbelegung kann ein Grund sein."},
+{id:12,chapter:"Untermiete",law:"§ 11 MRG",q:"Ist ein stark überhöhter Untermietzins problematisch?",a:"Ja.",e:"Eine unverhältnismäßig hohe Gegenleistung kann ein wichtiger Grund gegen die Untervermietung sein."},
+{id:13,chapter:"Weitergabe",law:"§ 12 MRG",q:"Kann ein Hauptmieter die Wohnung an nahe Angehörige abtreten?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ein gemeinsamer Haushalt und die gesetzliche Mindestdauer sind wichtig."},
+{id:14,chapter:"Weitergabe",law:"§ 14 MRG",q:"Endet der Mietvertrag automatisch mit dem Tod des Mieters?",a:"Nein.",e:"Bestimmte Personen können eintreten. Voraussetzungen sind gemeinsamer Haushalt und dringender Wohnbedarf."},
+{id:15,chapter:"Mietzins",law:"§ 15 MRG",q:"Woraus besteht der Mietzins?",a:"Aus mehreren Bestandteilen.",e:"Dazu zählen Hauptmietzins, Betriebskosten, besondere Aufwendungen und Umsatzsteuer."},
+{id:16,chapter:"Mietzins",law:"§ 16 MRG",q:"Gibt es immer denselben erlaubten Hauptmietzins?",a:"Nein.",e:"Das Mietobjekt und die Anwendbarkeit des MRG bestimmen das Mietzinssystem."},
+{id:17,chapter:"Mietzins",law:"§ 16b MRG",q:"Darf eine Kaution vereinbart werden?",a:"Ja.",e:"Sie sichert Ansprüche des Vermieters. Sie darf nicht willkürlich verwendet werden."},
+{id:18,chapter:"Mietzins",law:"§ 17 MRG",q:"Warum ist die Nutzfläche wichtig?",a:"Sie kann den Anteil an Gesamtkosten bestimmen.",e:"Die Berechnung folgt gesetzlichen Regeln."},
+{id:19,chapter:"Betriebskosten",law:"§ 21 MRG",q:"Darf der Vermieter jede Ausgabe als Betriebskosten verrechnen?",a:"Nein.",e:"Nur gesetzlich vorgesehene Kosten dürfen weiterverrechnet werden."},
+{id:20,chapter:"Betriebskosten",law:"§ 21 MRG",q:"Müssen Betriebskosten nachvollziehbar sein?",a:"Ja.",e:"Es muss eine Abrechnung geben. Der Mieter hat Einsichtsrechte."},
+{id:21,chapter:"Zahlungen",law:"§ 27 MRG",q:"Sind verbotene Ablösen erlaubt?",a:"Nein.",e:"Zahlungen ohne gleichwertige Gegenleistung können unzulässig sein."},
+{id:22,chapter:"Befristung",law:"§ 29 MRG",q:"Muss eine Befristung schriftlich sein?",a:"Ja.",e:"Das Vertragsende durch Zeitablauf muss schriftlich vereinbart sein."},
+{id:23,chapter:"Befristung",law:"§ 29 Abs. 1 MRG",q:"Wie lang muss eine befristete Wohnungsmiete mindestens dauern?",a:"Meist mindestens fünf Jahre.",e:"Ist der Vermieter kein Unternehmer, reichen mindestens drei Jahre. Stand: 23.08.2026."},
+{id:24,chapter:"Befristung",law:"§ 29 Abs. 2 MRG",q:"Kann der Mieter einen befristeten Wohnungsvertrag früher kündigen?",a:"Ja, nach einem Jahr.",e:"Die Frist beträgt drei Monate. Gekündigt wird zum Monatsletzten."},
+{id:25,chapter:"Befristung",law:"§ 29 Abs. 3 MRG",q:"Was passiert, wenn nach dem Fristende niemand handelt?",a:"Der Vertrag wird einmal befristet erneuert.",e:"Die Erneuerung dauert fünf Jahre. Bei einem nicht unternehmerischen Vermieter dauert sie drei Jahre."},
+{id:26,chapter:"Befristung",law:"§ 29 Abs. 3 MRG",q:"Was passiert nach der zweiten stillen Fortsetzung?",a:"Der Vertrag wird unbefristet.",e:"Das gilt nach Ablauf des ersten gesetzlichen Erneuerungszeitraums."},
+{id:27,chapter:"Befristung",law:"§ 29 Abs. 4 MRG",q:"Kann eine Befristung verlängert werden?",a:"Ja, schriftlich.",e:"Bei Wohnungen gelten wieder die gesetzlichen Mindestzeiten."},
+{id:28,chapter:"Kündigung",law:"§ 30 MRG",q:"Kann der Vermieter ohne Grund kündigen?",a:"Im Schutzbereich des MRG grundsätzlich nein.",e:"Er braucht einen wichtigen Kündigungsgrund."},
+{id:29,chapter:"Kündigung",law:"§ 30 Abs. 2 Z 1 MRG",q:"Kann Mietzinsrückstand ein Kündigungsgrund sein?",a:"Ja.",e:"Der Mieter muss trotz Mahnung im Rückstand sein. Die gesetzlichen Voraussetzungen müssen erfüllt sein."},
+{id:30,chapter:"Kündigung",law:"§ 33 MRG",q:"Kann der Mieter einen Mietzinsrückstand noch bezahlen?",a:"Unter bestimmten Voraussetzungen ja.",e:"Ohne grobes Verschulden kann eine rechtzeitige Zahlung die Kündigung abwenden. Kosten können bleiben."},
+{id:31,chapter:"Kündigung",law:"§ 30 Abs. 2 Z 3 MRG",q:"Was bedeutet erheblich nachteiliger Gebrauch?",a:"Der Mieter schädigt oder vernachlässigt das Mietobjekt schwer.",e:"Auch ernstes Gefährden des Hauses kann darunterfallen."},
+{id:32,chapter:"Kündigung",law:"§ 30 Abs. 2 Z 3 MRG",q:"Kann grob rücksichtsloses Verhalten ein Kündigungsgrund sein?",a:"Ja.",e:"Das Verhalten muss das Zusammenwohnen ernsthaft beeinträchtigen."},
+{id:33,chapter:"Kündigung",law:"§ 30 Abs. 2 Z 4 MRG",q:"Kann unerlaubte Weitergabe ein Kündigungsgrund sein?",a:"Ja.",e:"Das gilt etwa bei vollständiger Weitergabe ohne eigenen Bedarf. Details sind zu prüfen."},
+{id:34,chapter:"Kündigung",law:"§ 30 Abs. 2 MRG",q:"Kann dauernde Nichtbenützung ein Kündigungsgrund sein?",a:"Ja, unter gesetzlichen Voraussetzungen.",e:"Ein absehbarer dringender Bedarf kann dagegen sprechen."},
+{id:35,chapter:"Kündigung",law:"§ 30 Abs. 2 Z 8 und 9 MRG",q:"Reicht der Wunsch nach Eigenbedarf immer aus?",a:"Nein.",e:"Der Bedarf muss dringend sein. Die Gerichte prüfen streng."},
+{id:36,chapter:"Verfahren",law:"§ 33 MRG",q:"Muss der Vermieter den Kündigungsgrund nennen?",a:"Ja.",e:"Der Grund ist in der gerichtlichen Kündigung kurz anzuführen."},
+{id:37,chapter:"Verfahren",law:"§ 33 MRG",q:"Wer muss den Kündigungsgrund beweisen?",a:"Der Vermieter.",e:"Er muss den behaupteten Grund im Verfahren nachweisen."},
+{id:38,chapter:"Verfahren",law:"§ 34 MRG",q:"Kann das Gericht die Räumungsfrist verlängern?",a:"Ja, unter bestimmten Voraussetzungen.",e:"Der Mieter braucht wichtige Gründe. Dem Vermieter darf kein unverhältnismäßiger Nachteil entstehen."},
+{id:39,chapter:"Verfahren",law:"MRG, ZPO und EO",q:"Darf der Vermieter selbst das Schloss wechseln?",a:"Nein.",e:"Eine zwangsweise Räumung erfolgt nur mit gerichtlichem Titel und Exekution."},
+{id:40,chapter:"Verfahren",law:"§§ 29 bis 35 MRG",q:"Was ist der sichere Weg zur Räumung?",a:"Kündigungsgrund prüfen und gerichtlichen Weg einhalten.",e:"Keine Selbsthilfe. Bei einem konkreten Fall ist rechtliche Beratung sinnvoll."}
 ];
 
 const KEY="mrg-trainer-progress-v1";
@@ -177,7 +177,7 @@ function doSearch(){
   const q=els.search.value.trim().toLowerCase();
   if(!q){els.results.style.display="none";els.results.innerHTML="";return}
   const found=cards.filter(c=>`${c.q} ${c.a} ${c.e} ${c.law}`.toLowerCase().includes(q)).slice(0,8);
-  els.results.innerHTML=found.length?found.map(c=>`<div class="result" data-id="${c.id}"><b>${escapeHtml(c.q)}</b><small>${escapeHtml(c.law)} Â· ${escapeHtml(c.chapter)}</small></div>`).join(""):"<div class='result'>Nichts gefunden.</div>";
+  els.results.innerHTML=found.length?found.map(c=>`<div class="result" data-id="${c.id}"><b>${escapeHtml(c.q)}</b><small>${escapeHtml(c.law)} · ${escapeHtml(c.chapter)}</small></div>`).join(""):"<div class='result'>Nichts gefunden.</div>";
   els.results.style.display="block";
   els.results.querySelectorAll("[data-id]").forEach(r=>r.addEventListener("click",()=>{const c=cards.find(x=>x.id===Number(r.dataset.id));queue=[c];index=0;els.search.value="";els.results.style.display="none";render()}));
 }
@@ -190,7 +190,7 @@ els.ratings.addEventListener("click",e=>{const b=e.target.closest("[data-grade]"
 els.chapter.addEventListener("change",e=>{currentChapter=e.target.value;includeNew=true;buildQueue()});
 els.search.addEventListener("input",doSearch);
 $("learnNewBtn").addEventListener("click",()=>{includeNew=true;const all=eligible().filter(c=>state(c.id).reps===0);queue=all;index=0;render()});
-const dialog=$("settings");$("settingsBtn").addEventListener("click",()=>dialog.showModal());$("closeBtn").addEventListener("click",()=>dialog.close());$("exportBtn").addEventListener("click",exportProgress);$("resetBtn").addEventListener("click",()=>{if(confirm("Lernstand wirklich lÃ¶schen?")){progress={};saveProgress();dialog.close();buildQueue()}});
+const dialog=$("settings");$("settingsBtn").addEventListener("click",()=>dialog.showModal());$("closeBtn").addEventListener("click",()=>dialog.close());$("exportBtn").addEventListener("click",exportProgress);$("resetBtn").addEventListener("click",()=>{if(confirm("Lernstand wirklich löschen?")){progress={};saveProgress();dialog.close();buildQueue()}});
 dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
 document.addEventListener("keydown",e=>{if(e.key===" "&&els.showBtn.style.display!=="none"){e.preventDefault();reveal()}if(els.ratings.classList.contains("show")&&["1","2","3","4"].includes(e.key)){grade(["again","hard","good","easy"][Number(e.key)-1])}});
 </script>
